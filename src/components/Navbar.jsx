@@ -12,7 +12,7 @@ const LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
-  // Clear over the hero; once the hero is behind the bar, it frosts to cream with navy text.
+  // Dark frosted glass over the hero so the links read over the headline; once the hero is behind the bar, it frosts to cream with navy text.
   useEffect(() => {
     const hero = document.getElementById('top');
     const io = new IntersectionObserver(([entry]) => setScrolled(!entry.isIntersecting), {
@@ -26,10 +26,10 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-s5 z-50 flex justify-center px-s5 md:top-s6">
       <nav
         aria-label="Main"
-        className={`flex w-full max-w-4xl items-center justify-between gap-s4 rounded-full border py-s4 pl-s5 pr-s4 leading-snug sm:gap-s5 transition-[background-color,color,border-color,box-shadow] duration-500 ${
+        className={`flex w-full max-w-4xl items-center justify-between gap-s4 rounded-full border py-s4 pl-s5 pr-s4 leading-snug sm:gap-s5 transition-[background-color,color,border-color,box-shadow,backdrop-filter] duration-500 ${
           scrolled
             ? 'border-navy/10 bg-paper/60 text-navy shadow-card backdrop-blur-xl'
-            : 'on-dark border-transparent bg-transparent text-cream'
+            : 'on-dark border-cream/10 bg-midnight/70 text-cream shadow-card backdrop-blur-xl'
         }`}
       >
         {/* On a narrow phone the wordmark stacks to two lines rather than push the button out. */}
