@@ -3,12 +3,12 @@ import gsap from 'gsap';
 import { useReducedMotion } from '../site';
 import { SoundBars } from './ui';
 
-/* ── Card 1: Tap the 1 ── three stacked cards that shuffle every 3 seconds. */
+/* ── Card 1: Tap the beat ── three stacked cards that shuffle every 3 seconds. */
 
 const TAP_CARDS = [
-  { id: 'tap', label: 'Downbeat tapped', chip: 'Space', title: 'Bar 17', meta: '0:57.42' },
-  { id: 'section', label: 'Section marked', chip: 'Chorus', title: 'Chorus 1', meta: 'from bar 21' },
-  { id: 'lock', label: 'Your taps are steady', chip: 'Offer', title: '72 BPM', meta: 'your call' },
+  { id: 'tap', label: 'Beat 1 tapped', chip: 'Shift+Space', title: 'Bar 17', meta: '0:57 · beat 1' },
+  { id: 'section', label: 'Section marked', chip: '4', title: 'Chorus 1', meta: 'from bar 21' },
+  { id: 'map', label: 'After 8 taps', chip: 'Tempo', title: '72.0 BPM', meta: 'from your taps' },
 ];
 
 function TapVisual({ id }) {
@@ -36,9 +36,8 @@ function TapVisual({ id }) {
     );
   }
   return (
-    <div className="flex items-center gap-3 text-[12px] font-bold">
-      <span className="rounded-full px-3.5 py-2 ring-2 ring-amber">Lock to 72 BPM</span>
-      <span className="text-smoke">Not now</span>
+    <div className="flex items-center text-[12px] font-bold">
+      <span className="rounded-full px-3.5 py-2 ring-2 ring-amber">Map the rest from the song</span>
     </div>
   );
 }
@@ -98,11 +97,11 @@ const FEED = [
   'Verse 1 → lands on bar 5, beat 1',
   '  pickup 1 beat · fade in 1 beat',
   'Chorus 1 → lands on bar 21, beat 1',
-  '  pickup 1 beat · fade out 2 beats',
+  '  repeats ×2 · jump at end of phrase',
   'Bridge → lands on bar 53, beat 1',
-  '  pickup 1 beat · fade out 2 beats',
+  '  fade out 2 beats · ends on the 1',
   'Tag → lands on bar 77, beat 1',
-  '  no pickup · fade out 4 beats',
+  '  repeats ×3 · fade out 4 beats',
 ];
 
 function PrepFeed() {
@@ -164,21 +163,26 @@ function PrepFeed() {
   );
 }
 
-/* ── Card 3: Perform the set ── a cursor queues the next song's pad, then starts it on the next bar. */
+/* ── Card 3: Perform the set ── in the gap after a song, a cursor taps the next key's pad, it comes in on the
+   next bar, then the cursor starts the next song. */
 
-const CIRCLE_OF_FOURTHS = ['C', 'F', 'B♭', 'E♭', 'A♭', 'D♭', 'G♭', 'B', 'E', 'A', 'D', 'G'];
-const TRANSITIONS = ['Stop', 'Straight in', 'Pad path'];
+// Key names as the app spells them, in circle-of-4ths order.
+const CIRCLE_OF_FOURTHS = ['C', 'F', 'Bb', 'Eb', 'G#', 'C#', 'F#', 'B', 'E', 'A', 'D', 'G'];
+const PAD_MODES = ['Simple', 'Guided', 'Advanced'];
 
 function PadScheduler() {
   const root = useRef(null);
   const cursor = useRef(null);
   const reduced = useReducedMotion();
+  // The gap keeps the key the last song ended in; the pad sounding moves on within it.
+  const [left, setLeft] = useState('E');
   const [playing, setPlaying] = useState('E');
   const [pressed, setPressed] = useState(null);
-  // With less motion, hold one still frame: E sounding, A queued.
+  // With less motion, hold one still frame: E sounding, A tapped.
+  const from = reduced ? 'E' : left;
   const now = reduced ? 'E' : playing;
   const queued = reduced ? 'A' : pressed;
-  const next = CIRCLE_OF_FOURTHS[(CIRCLE_OF_FOURTHS.indexOf(now) + 1) % 12];
+  const nextKey = CIRCLE_OF_FOURTHS[(CIRCLE_OF_FOURTHS.indexOf(from) + 1) % 12];
 
   useEffect(() => {
     if (reduced) return;
@@ -196,6 +200,7 @@ function PadScheduler() {
       gsap
         .timeline({ repeat: -1, repeatRefresh: true, onRepeat: () => (at = (at + 1) % 12) })
         .call(() => {
+          setLeft(CIRCLE_OF_FOURTHS[at]);
           setPlaying(CIRCLE_OF_FOURTHS[at]);
           setPressed(null);
         })
@@ -205,17 +210,18 @@ function PadScheduler() {
         .to(cursor.current, { scale: 0.85, duration: 0.12, yoyo: true, repeat: 1 })
         .call(() => setPressed(to()), null, '<')
         .to(cursor.current, { x: () => point(start, 'x'), y: () => point(start, 'y'), duration: 0.9, ease: 'power2.inOut' }, '+=0.45')
-        .to(cursor.current, { scale: 0.85, duration: 0.12, yoyo: true, repeat: 1 })
-        .to(start, { scale: 0.95, duration: 0.12, yoyo: true, repeat: 1 }, '<')
+        // A tapped pad comes in on the next bar by itself, while the cursor heads for Start.
         .call(
           () => {
             setPlaying(to());
             setPressed(null);
           },
           null,
-          '+=0.5',
+          '-=0.3',
         )
-        .to(cursor.current, { opacity: 0, duration: 0.4 }, '<')
+        .to(cursor.current, { scale: 0.85, duration: 0.12, yoyo: true, repeat: 1 })
+        .to(start, { scale: 0.95, duration: 0.12, yoyo: true, repeat: 1 }, '<')
+        .to(cursor.current, { opacity: 0, duration: 0.4 }, '+=0.5')
         .to({}, { duration: 1.1 });
     }, root);
     return () => ctx.revert();
@@ -224,10 +230,10 @@ function PadScheduler() {
   return (
     <div ref={root} className="relative flex h-full flex-col rounded-[2rem] border border-navy/10 bg-paper p-4 sm:p-5">
       <div className="flex gap-1 rounded-full bg-navy/[0.06] p-1 text-[11px] font-semibold" aria-hidden="true">
-        {TRANSITIONS.map(name => (
+        {PAD_MODES.map(name => (
           <span
             key={name}
-            className={`flex-1 rounded-full py-1.5 text-center ${name === 'Pad path' ? 'bg-amber/15 text-amber-deep ring-1 ring-amber' : 'text-smoke'}`}
+            className={`flex-1 rounded-full py-1.5 text-center ${name === 'Advanced' ? 'bg-amber/15 text-amber-deep ring-1 ring-amber' : 'text-smoke'}`}
           >
             {name}
           </span>
@@ -235,15 +241,15 @@ function PadScheduler() {
       </div>
 
       <div className="mt-3 flex items-center justify-between">
-        <span className="caps text-smoke">Key pads</span>
+        <span className="caps text-smoke">Live pad</span>
         <span className="font-mono text-[11px] text-navy">
-          {now} → {queued ?? next}
+          {from} → {nextKey}
         </span>
       </div>
 
       <p className="sr-only">
-        Example: the pad in E is sounding. The next song is in A, one step around the circle of 4ths. Press its pad,
-        then Start on next bar.
+        Example: a song in E has ended and its pad is sounding. The next song is in A, one step around the circle of
+        4ths. Tap the A pad and it comes in on the next bar, then start the next song on the next bar.
       </p>
       <div className="mt-2 grid grid-cols-6 gap-1.5" aria-hidden="true">
         {CIRCLE_OF_FOURTHS.map(key => (
@@ -263,10 +269,10 @@ function PadScheduler() {
         ))}
       </div>
 
-      <div className="mt-auto flex items-center justify-between gap-3" aria-hidden="true">
+      <div className="mt-auto flex items-center justify-between gap-2" aria-hidden="true">
         <SoundBars mode={reduced ? 'still' : 'beat'} className="h-6" barClassName="w-[5px] bg-navy" />
-        <span data-start className="rounded-full bg-navy px-4 py-2.5 text-[12px] font-bold text-cream">
-          Start on next bar
+        <span data-start className="whitespace-nowrap rounded-full bg-navy px-3.5 py-2.5 text-[12px] font-bold text-cream">
+          Start Intro on next bar
         </span>
       </div>
 
@@ -286,21 +292,21 @@ function PadScheduler() {
 
 const CARDS = [
   {
-    step: '01 · Tap',
-    title: 'Tap the 1',
-    body: 'Play a song and press Space on the first beat of each bar. Mark Intro, Verse, Chorus, Bridge, Tag and Outro with a key as they go by. When your taps are steady, Lamp Circle offers to lock the tempo.',
+    step: '01 · Map Song',
+    title: 'Tap the beat',
+    body: 'Play a song and press Space on every beat, with Shift+Space on beat 1. After 8 taps, Lamp Circle can follow the recording for the rest. Then press 1 to 8 as each section starts. It snaps to the nearest bar, and the app finds its key.',
     Demo: TapShuffler,
   },
   {
-    step: '02 · Prep',
+    step: '02 · Transitions + Export',
     title: 'Prep every landing',
-    body: 'Give each part a pickup for the singers who come in early, and a fade that finishes before it. Then every part lands on its bar’s 1, whether you loop it, jump to it, or let it play through.',
+    body: 'Give each section a pickup for singers who come in early, fades at its loop point, a repeat count, and a rule for when a jump lands: next beat, next bar, end of phrase or end of section. Audition the loop, then save the map as a .djw.',
     Demo: PrepFeed,
   },
   {
-    step: '03 · Perform',
+    step: '03 · Sets + Perform',
     title: 'Perform the set',
-    body: 'Put the songs in order and choose how each one hands off: Stop, Straight in, or Pad path. Pads in all 12 keys step around the circle of 4ths to the next song’s key, so there’s no dead air.',
+    body: 'Put ready songs in order. Each gap gets a live pad and a suggested way into the next key, or pads you pick. In Perform, number keys queue sections and H holds one. When a song ends, the pad plays on until you start the next song on the bar.',
     Demo: PadScheduler,
   },
 ];
@@ -339,12 +345,12 @@ export default function Features() {
           <p className="caps text-amber-deep">What it does</p>
           <h2 className="mt-4 text-4xl font-extrabold tracking-tight md:text-6xl">Tap. Prep. Perform.</h2>
           <p className="mt-5 text-lg leading-relaxed text-smoke">
-            Three screens, in the order you&rsquo;ll use them. Map a song once and it&rsquo;s ready for every set
+            Three steps, in the order you&rsquo;ll use them. Map a song once and it&rsquo;s ready for every set
             after.
           </p>
         </div>
 
-        <div className="feature-grid mt-14 grid gap-6 md:mt-20 md:grid-cols-3">
+        <div className="feature-grid mt-14 grid gap-6 md:mt-20 lg:grid-cols-3">
           {CARDS.map(({ step, title, body, Demo }) => (
             <article
               key={title}

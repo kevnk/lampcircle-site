@@ -49,9 +49,9 @@ export default function Hero() {
         </h1>
 
         <p className="hero-in mt-6 max-w-xl text-base leading-relaxed text-cream/80 md:text-lg">
-          Lamp Circle is a free Mac app for leading worship in a small room. Tap the 1 while a song plays and
-          mark its sections. Every part then lands on its bar&rsquo;s 1, and key pads carry you from one song to
-          the next.
+          Lamp Circle is a free Mac app for leading worship in a small room. Tap the beat while a song plays and
+          mark its sections. Every section then lands on its bar&rsquo;s 1, and a live pad carries you from one
+          song to the next.
         </p>
 
         <div className="hero-in mt-8 flex flex-wrap items-center gap-3">

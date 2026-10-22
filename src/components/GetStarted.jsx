@@ -5,27 +5,62 @@ import { DOWNLOAD_URL, IMAGES, RELEASES_URL, useReducedMotion } from '../site';
 import { Button } from './ui';
 
 const POINTS = [
-  'Free, for Mac',
+  'Free, for macOS 12 or later',
   'Your songs and maps stay on your Mac',
-  'Maps save as small .djw files, with no audio inside',
-  'Pads in all 12 keys for the space between songs',
+  'Maps save as small .djw files with no audio. A map of a YouTube song fetches the audio when you import it',
+  'One button downloads pads in all 12 keys for the space between songs',
 ];
 
-// The shape of a real map: one time per bar, and each part's landing.
-const DJW = [
-  ['djw', '1'],
-  ['song', ''],
-  ['  title', 'Way Maker'],
-  ['  meter', '4/4'],
-  ['grid', ''],
-  ['  downbeats', '[3.20, 6.74, …]'],
-  ['parts', ''],
-  ['  - name', 'Chorus 1'],
-  ['    start_bar', '21'],
-  ['    pickup_beats', '1'],
-  ['    fade_in', '1'],
-  ['    fade_out', '2'],
-];
+// A real map as the app writes it, cut short: a time for every beat and bar, and how each section lands.
+const DJW = `djw: 2
+song:
+  title: Way Maker
+  artist: Leeland
+  meter: 4/4
+  audio:
+    source: https://www.youtube.com/watch?v=iJCV_2H9xD0
+grid:
+  beats:
+    - 3.2
+    - 4.085
+    # … every beat
+  downbeats:
+    - 3.2
+    - 6.74
+    # … every bar
+sections:
+  # …
+  - name: Chorus 1
+    type: chorus
+    start_bar: 21
+    end_bar: 29
+    key: E
+    pickup_beats: 1
+    fade_in: 1
+    fade_out: 2
+    repeats: 2
+    jump_at: phrase`.split('\n');
+
+/** One YAML line: keys in amber, values in cream, comments dimmed. */
+function DjwLine({ line }) {
+  const [, indent, dash, rest] = line.match(/^(\s*)(- )?(.*)$/);
+  if (rest.startsWith('#')) return <span className="block text-mist">{line}</span>;
+  const colon = rest.indexOf(':');
+  return (
+    <span className="block">
+      {indent}
+      {dash && <span className="text-mist">{dash}</span>}
+      {colon < 0 ? (
+        <span className="text-cream/90">{rest}</span>
+      ) : (
+        <>
+          <span className="text-amber-text">{rest.slice(0, colon + 1)}</span>
+          <span className="text-cream/90">{rest.slice(colon + 1)}</span>
+        </>
+      )}
+    </span>
+  );
+}
 
 export default function GetStarted() {
   const root = useRef(null);
@@ -59,8 +94,9 @@ export default function GetStarted() {
               Map one song <span className="font-drama font-normal italic text-amber">tonight.</span>
             </h2>
             <p className="gs-in mt-5 max-w-lg text-lg leading-relaxed text-cream/80">
-              Download Lamp Circle and import a song you lead often. Play it through once, tapping the 1 of each bar and
-              pressing a section key as each part starts. When it ends, the song is mapped.
+              Download Lamp Circle and add a song you lead often: paste a YouTube link or drop in an audio file. Tap 8
+              beats or more, let the app map the rest, and press 1 to 8 as each section starts. Shape the transitions,
+              save the .djw, and the song is ready for a set.
             </p>
             <ul className="mt-8 space-y-3">
               {POINTS.map(point => (
@@ -81,18 +117,15 @@ export default function GetStarted() {
             </div>
           </div>
 
-          <figure className="gs-in rounded-[2rem] bg-midnight/85 p-5 ring-1 ring-cream/10 backdrop-blur md:p-6">
+          <figure className="gs-in min-w-0 rounded-[2rem] bg-midnight/85 p-5 ring-1 ring-cream/10 backdrop-blur md:p-6">
             <figcaption className="flex items-center justify-between gap-3 font-mono text-[11px] text-mist">
               <span>way-maker.djw</span>
               <span>YAML · no audio</span>
             </figcaption>
             <pre className="mt-4 overflow-x-auto font-mono text-[12px] leading-6">
               <code>
-                {DJW.map(([key, value]) => (
-                  <span key={key} className="block">
-                    <span className="text-amber-text">{key}:</span>
-                    {value && <span className="text-cream/90"> {value}</span>}
-                  </span>
+                {DJW.map((line, i) => (
+                  <DjwLine key={i} line={line} />
                 ))}
               </code>
             </pre>

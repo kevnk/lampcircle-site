@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Download } from 'lucide-react';
 import { DOWNLOAD_URL } from '../site';
-import { Button } from './ui';
+import { Button, GithubLink } from './ui';
 
 const LINKS = [
   { href: '#features', label: 'Tap · Prep · Perform' },
@@ -26,7 +26,7 @@ export default function Navbar() {
     <header className="fixed inset-x-0 top-3 z-50 flex justify-center px-4 md:top-5">
       <nav
         aria-label="Main"
-        className={`flex w-full max-w-3xl items-center justify-between gap-3 rounded-full border py-2 pl-4 pr-2 transition-[background-color,color,border-color,box-shadow] duration-500 ${
+        className={`flex w-full max-w-3xl items-center justify-between gap-2 rounded-full border py-2 pl-4 pr-2 sm:gap-3 transition-[background-color,color,border-color,box-shadow] duration-500 ${
           scrolled
             ? 'border-navy/10 bg-paper/60 text-navy shadow-card backdrop-blur-xl'
             : 'on-dark border-transparent bg-transparent text-cream'
@@ -34,7 +34,7 @@ export default function Navbar() {
       >
         <a href="#top" className="lift flex shrink-0 items-center gap-2" aria-label="Lamp Circle, back to top">
           <img src="/brand/mark.webp" alt="" width="480" height="380" className="h-8 w-auto" />
-          <span className="text-[13px] tracking-[0.16em]">
+          <span className="text-[13px] tracking-[0.16em] max-[389px]:sr-only">
             <span className="font-extrabold">LAMP</span> <span className="font-light">CIRCLE</span>
           </span>
         </a>
@@ -49,12 +49,15 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <Button href={DOWNLOAD_URL} size="sm">
-          <Download size={15} strokeWidth={2.5} aria-hidden="true" />
-          <span>
-            Download<span className="sr-only sm:not-sr-only"> for Mac</span>
-          </span>
-        </Button>
+        <div className="flex shrink-0 items-center sm:gap-1">
+          <GithubLink className="h-9 w-9 opacity-80 hover:opacity-100 sm:h-10 sm:w-10" />
+          <Button href={DOWNLOAD_URL} size="sm" className="max-sm:px-3.5">
+            <Download size={15} strokeWidth={2.5} aria-hidden="true" />
+            <span>
+              Download<span className="sr-only sm:not-sr-only"> for Mac</span>
+            </span>
+          </Button>
+        </div>
       </nav>
     </header>
   );

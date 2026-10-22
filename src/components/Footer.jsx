@@ -1,4 +1,5 @@
 import { DOWNLOAD_URL, RELEASES_URL, REPO_URL } from '../site';
+import { GithubLink } from './ui';
 
 const COLUMNS = [
   {
@@ -22,8 +23,9 @@ const COLUMNS = [
 
 const FINE_PRINT = [
   'Free to download and use.',
-  'Lamp Circle includes no songs. You import your own recordings.',
-  'Maps hold timing and parts, never audio.',
+  'Lamp Circle comes with no songs or pads. You add your own audio files, or paste YouTube links.',
+  'YouTube downloads need yt-dlp and ffmpeg from Homebrew.',
+  'Maps hold timing and sections, never audio.',
 ];
 
 export default function Footer() {
@@ -72,7 +74,10 @@ export default function Footer() {
 
         <div className="mt-14 flex flex-col gap-2 border-t border-line pt-6 text-xs text-mist sm:flex-row sm:justify-between">
           <p>© 2026 Lamp Circle</p>
-          <p>Made for small rooms.</p>
+          <div className="flex items-center gap-3">
+            <p>Made for small rooms.</p>
+            <GithubLink className="-my-2.5 h-10 w-10 text-cream/85 hover:text-amber-text" />
+          </div>
         </div>
       </div>
     </footer>

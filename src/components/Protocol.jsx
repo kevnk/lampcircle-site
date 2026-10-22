@@ -224,9 +224,9 @@ function PadWave() {
 const STEPS = [
   {
     n: '01',
-    title: 'One mark per bar',
-    body: 'You tap the 1 of every bar and the map stores exactly those times. The beats between are spaced evenly, so a live recording that drifts still lines up.',
-    spec: 'downbeats: [3.20, 6.74, 10.27, 13.79, …]',
+    title: 'A time for every beat',
+    body: 'Each tap is a beat, and Shift marks beat 1. A tap snaps onto the drum hit or strum it was reaching for. Gaps are spaced evenly, and the app can follow the recording for the rest, so a live take that drifts still lines up.',
+    spec: 'beats: [3.2, 4.085, 4.97, …] · downbeats: [3.2, 6.74, …]',
     Art: BarClock,
     artWidth: 'max-w-[min(100%,46vh)]',
     surface: 'bg-cream text-navy',
@@ -237,7 +237,7 @@ const STEPS = [
   {
     n: '02',
     title: 'Fade, pickup, then the 1',
-    body: 'Each part’s fade-in finishes before its pickup, so the singers’ early notes play at full volume. Then the part lands on its bar’s 1.',
+    body: 'Each section’s fade-in finishes before its pickup, so the singers’ early notes play at full volume. Then the section lands on its bar’s 1.',
     spec: '{ name: Chorus 1, start_bar: 21, pickup_beats: 1, fade_in: 1 }',
     Art: ScanGrid,
     artWidth: 'max-w-[min(100%,62vh)]',
@@ -249,8 +249,8 @@ const STEPS = [
   {
     n: '03',
     title: 'Pads move in 4ths',
-    body: 'When a song ends, a pad in its key keeps sounding. It steps around the circle of 4ths to the next song’s key, and the next song comes in on the bar.',
-    spec: 'pad path: E → A · one step on the circle',
+    body: 'When a song ends, a pad in the key it ended in keeps sounding. Sets suggests a way into the next song’s key, moving around the circle of 4ths when the keys are close, and Simple mode walks it one pad every 4 bars. Then the next song comes in on the bar.',
+    spec: 'live pad: E → A · way in: E, A',
     Art: PadWave,
     artWidth: 'max-w-[min(100%,70vh)]',
     surface: 'on-dark bg-panel text-cream bg-[radial-gradient(60%_50%_at_70%_45%,rgb(240_166_75/0.12),transparent)]',
@@ -320,7 +320,7 @@ export default function Protocol() {
         <p className="caps text-amber-text">How it works</p>
         <h2 className="mt-4 max-w-3xl text-4xl font-extrabold tracking-tight md:text-6xl">Three rules it plays by.</h2>
         <p className="mt-5 max-w-xl text-lg leading-relaxed text-mist">
-          Under every screen sit three small rules about time and key. They&rsquo;re why a part lands where you
+          Under every screen sit three small rules about time and key. They&rsquo;re why a section lands where you
           expect it to.
         </p>
       </div>
