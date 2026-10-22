@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper font-sans text-navy antialiased;
+  }
+
+  /* Film grain over everything, so no gradient reads flat. */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background: rgb(240 166 75 / 0.35);
+  }
+
+  /* Amber dark enough to read on cream; the lighter amber on dark sections. */
+  :focus-visible {
+    outline: 2px solid #94570f;
+    outline-offset: 3px;
+  }
+  .on-dark :focus-visible {
+    outline-color: #f5b35e;
+  }
+}
+
+@layer components {
+  /* Small spaced capitals, after the thin CIRCLE in the wordmark. */
+  .caps {
+    @apply text-[11px] font-semibold uppercase tracking-[0.2em];
+  }
+
+  /* Magnetic pill: a slight swell, and a fill that slides up from below. */
+  .btn {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition:
+      transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 0.5s ease,
+      box-shadow 0.5s ease;
+  }
+  .btn:hover {
+    transform: scale(1.03);
+  }
+  .btn-slide {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    transform: translateY(102%);
+    transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .btn:hover > .btn-slide,
+  .btn:focus-visible > .btn-slide {
+    transform: translateY(0);
+  }
+
+  .btn-amber {
+    background: #f0a64b;
+    color: #10283a;
+  }
+  .btn-amber > .btn-slide {
+    background: #ffc777;
+  }
+  .btn-amber:hover {
+    box-shadow:
+      0 0 0 1px rgb(240 166 75 / 0.35),
+      0 0 32px -2px rgb(240 166 75 / 0.55);
+  }
+
+  .btn-ghost {
+    color: #f6ecdd;
+    border: 1px solid rgb(246 236 221 / 0.35);
+  }
+  .btn-ghost > .btn-slide {
+    background: #f6ecdd;
+  }
+  .btn-ghost:hover,
+  .btn-ghost:focus-visible {
+    color: #10283a;
+    border-color: #f6ecdd;
+  }
+
+  .lift {
+    transition:
+      transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      color 0.3s ease;
+  }
+  .lift:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* Perform's beat counter: each bar lights on its beat, one bar at 72 BPM. */
+@keyframes beat {
+  0%,
+  20% {
+    opacity: 1;
+  }
+  25%,
+  100% {
+    opacity: 0.22;
+  }
+}
+.beat {
+  animation: beat 3.333s linear infinite;
+}
+
+/* The logo's resting bars, breathing slowly. */
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.35);
+  }
+}
+.breathe {
+  transform-origin: bottom;
+  animation: breathe 3.2s ease-in-out infinite;
+}
+
+/* A pad pressed by the demo cursor. */
+@keyframes press {
+  50% {
+    transform: scale(0.95);
+  }
+}
+.press {
+  animation: press 0.24s ease-out;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+.blink {
+  animation: blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
