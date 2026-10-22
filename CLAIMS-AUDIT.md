@@ -11,7 +11,7 @@ The site copy now describes the app as it works on `main`. I took out the featur
 
 ## Claims I changed
 
-Evidence is `main:` paths in `~/Sites/_misc/lampcircle`.
+Evidence is `main:` paths in `~/Sites/kevnk/lampcircle`.
 
 | File | Before → After | Evidence on main |
 |---|---|---|
