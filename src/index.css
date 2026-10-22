@@ -165,13 +165,15 @@
   animation: press 0.24s ease-out;
 }
 
-@keyframes blink {
-  50% {
+/* A demo's new state rising into place. */
+@keyframes rise {
+  from {
     opacity: 0;
+    transform: translateY(6px);
   }
 }
-.blink {
-  animation: blink 1s steps(1) infinite;
+.rise {
+  animation: rise 0.5s ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {

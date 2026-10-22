@@ -56,7 +56,6 @@ export default {
       fontFamily: {
         sans: ['Montserrat', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         drama: ['"Playfair Display"', 'Georgia', 'serif'],
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       boxShadow: {
         glow: '0 0 0 1px rgb(240 166 75 / 0.35), 0 0 28px -2px rgb(240 166 75 / 0.55)',

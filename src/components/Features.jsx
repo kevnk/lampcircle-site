@@ -77,13 +77,13 @@ function TapShuffler() {
           >
             <div className="flex items-center justify-between gap-s4">
               <span className="caps text-t-1 text-smoke">{card.label}</span>
-              <span className="rounded-full border border-navy/20 px-s4 py-s1 font-mono text-t-1 uppercase tracking-wider">
+              <span className="rounded-full border border-navy/20 px-s4 py-s1 text-t-1 font-semibold uppercase tracking-wider">
                 {card.chip}
               </span>
             </div>
             <p className="flex items-baseline gap-s4 leading-snug">
               <span className="whitespace-nowrap text-t1 font-extrabold tracking-tight">{card.title}</span>
-              <span className="font-mono text-t-1 text-smoke">{card.meta}</span>
+              <span className="text-t-1 text-smoke">{card.meta}</span>
             </p>
             <TapVisual id={card.id} />
           </div>
@@ -93,73 +93,57 @@ function TapShuffler() {
   );
 }
 
-/* ── Card 2: Prep every landing ── a live feed typed out a character at a time. */
+/* ── Card 2: Prep every landing ── one section's settings, stepping through four sections of the song. */
 
-const FEED = [
-  'Verse 1 → lands on bar 5, beat 1',
-  '  pickup 1 beat · fade in 1 beat',
-  'Chorus 1 → lands on bar 21, beat 1',
-  '  repeats ×2 · jump at end of phrase',
-  'Bridge → lands on bar 53, beat 1',
-  '  fade out 2 beats · ends on the 1',
-  'Tag → lands on bar 77, beat 1',
-  '  repeats ×3 · fade out 4 beats',
+const PREP = [
+  { name: 'Verse 1', bar: 5, pickup: '1 beat', fadeIn: '1 beat', fadeOut: '1 beat', repeats: '×1', jump: 'Next bar' },
+  { name: 'Chorus 1', bar: 21, pickup: '1 beat', fadeIn: '1 beat', fadeOut: '2 beats', repeats: '×2', jump: 'End of phrase' },
+  { name: 'Bridge', bar: 53, pickup: '1 beat', fadeIn: '1 beat', fadeOut: '2 beats', repeats: '×1', jump: 'End of section' },
+  { name: 'Tag', bar: 77, pickup: 'None', fadeIn: '1 beat', fadeOut: '4 beats', repeats: '×3', jump: 'End of section' },
 ];
 
-function PrepFeed() {
+function PrepCard() {
   const reduced = useReducedMotion();
-  const [done, setDone] = useState([]);
-  const [typing, setTyping] = useState('');
+  const [at, setAt] = useState(1);
 
   useEffect(() => {
     if (reduced) return;
-    let line = 0;
-    let char = 0;
-    let timer;
-    const tick = () => {
-      const text = FEED[line % FEED.length];
-      if (char <= text.length) {
-        setTyping(text.slice(0, char++));
-        timer = setTimeout(tick, 26 + Math.random() * 38);
-      } else {
-        setDone(prev => [...prev, text].slice(-4));
-        setTyping('');
-        line++;
-        char = 0;
-        timer = setTimeout(tick, 650);
-      }
-    };
-    timer = setTimeout(tick, 500);
-    return () => clearTimeout(timer);
+    const timer = setInterval(() => setAt(prev => (prev + 1) % PREP.length), 3000);
+    return () => clearInterval(timer);
   }, [reduced]);
 
-  const lines = reduced ? FEED.slice(2, 6) : done;
+  const section = PREP[reduced ? 1 : at];
+  const rows = [
+    ['Pickup', section.pickup],
+    ['Fade in', section.fadeIn],
+    ['Fade out', section.fadeOut],
+    ['Repeats', section.repeats],
+    ['Jumps land at', section.jump],
+  ];
 
   return (
     <div className="on-dark flex h-full flex-col rounded-[2rem] bg-midnight px-s6 py-half-s7 text-cream">
-      <div className="flex items-center justify-between leading-snug">
+      <p className="sr-only">
+        Example prep for Chorus 1: a 1-beat pickup, a 1-beat fade in, a 2-beat fade out, 2 repeats, and jumps that land
+        at the end of the phrase.
+      </p>
+      <div className="flex items-center justify-between leading-snug" aria-hidden="true">
         <span className="caps flex items-center gap-s4 text-t-1 text-cream">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber opacity-70" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-amber" />
-          </span>
-          Live feed
+          <span className="h-2 w-2 rounded-full bg-amber" />
+          Prep
         </span>
-        <span className="font-mono text-t-1 text-mist">way-maker.djw</span>
+        <span className="text-t-1 text-mist">Lands on bar {section.bar}</span>
       </div>
-      <p className="sr-only">Example prep notes: {FEED.join('. ')}.</p>
-      <div className="mt-auto space-y-s2 font-mono text-t-1" aria-hidden="true">
-        {lines.map((text, i) => (
-          <p key={`${text}-${i}`} className="whitespace-pre-wrap text-mist" style={{ opacity: 0.75 + (i / lines.length) * 0.25 }}>
-            {text}
-          </p>
-        ))}
-        {!reduced && (
-          <p className="whitespace-pre-wrap text-cream">
-            {typing}
-            <span className="blink ml-s1 inline-block h-[1.05em] w-[0.55em] translate-y-[3px] bg-amber" />
-          </p>
-        )}
+      <div key={section.name} className="rise mt-s4 flex flex-1 flex-col" aria-hidden="true">
+        <p className="text-t1 font-extrabold leading-snug tracking-tight">{section.name}</p>
+        <dl className="mt-auto space-y-s2 text-t-1 leading-snug">
+          {rows.map(([label, value]) => (
+            <div key={label} className="flex justify-between gap-s4 border-b border-cream/10 pb-s2">
+              <dt className="text-mist">{label}</dt>
+              <dd className="font-semibold">{value}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </div>
   );
@@ -244,7 +228,7 @@ function PadScheduler() {
 
       <div className="mt-s4 flex items-center justify-between leading-snug">
         <span className="caps text-t-1 text-smoke">Live pad</span>
-        <span className="font-mono text-t-1 text-navy">
+        <span className="text-t-1 font-semibold text-navy">
           {from} → {nextKey}
         </span>
       </div>
@@ -300,10 +284,10 @@ const CARDS = [
     Demo: TapShuffler,
   },
   {
-    step: '02 · Transitions + Export',
+    step: '02 · Transitions + Save',
     title: 'Prep every landing',
-    body: 'Give each section a pickup for singers who come in early, fades at its loop point, a repeat count, and a rule for when a jump lands: next beat, next bar, end of phrase or end of section. Audition the loop, then save the map as a .djw.',
-    Demo: PrepFeed,
+    body: 'Give each section a pickup for singers who come in early, fades at its loop point, a repeat count, and a rule for when a jump lands: next beat, next bar, end of phrase or end of section. Audition the loop, then save the song and add it to a set.',
+    Demo: PrepCard,
   },
   {
     step: '03 · Sets + Perform',
@@ -361,7 +345,7 @@ export default function Features() {
               <div className="h-[15rem]">
                 <Demo />
               </div>
-              <p className="mt-s6 font-mono leading-snug text-amber-deep">{step}</p>
+              <p className="mt-s6 font-semibold leading-snug text-amber-deep">{step}</p>
               <h3 className="mt-s4 text-t1 font-extrabold leading-snug tracking-tight">{title}</h3>
               <p className="mt-s4 text-smoke">{body}</p>
             </article>

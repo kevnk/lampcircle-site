@@ -47,8 +47,9 @@ export default function Manifesto() {
           <Words text="We focus on the" /> <Words text="living room." className="text-amber" />
         </p>
         <p className="line-note mt-s7 max-w-xl text-mist md:mt-s8">
-          One guitar, a few friends, and a song somebody asks for. Lamp Circle reads at a glance in a dim room, so
-          your eyes stay on the people, and a pad keeps sounding when the song ends.
+          No instruments in the room? You can do more than put on a YouTube video. Lamp Circle lets you hold a
+          chorus while the room keeps singing, repeat a verse, or move to the bridge when the moment calls for it,
+          and each change lands in time with the song. You follow the Spirit, not the video.
         </p>
       </div>
     </section>

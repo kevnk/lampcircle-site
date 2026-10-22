@@ -16,7 +16,7 @@ const COLUMNS = [
     links: [
       { href: DOWNLOAD_URL, label: 'Download for Mac' },
       { href: RELEASES_URL, label: 'All releases' },
-      { href: REPO_URL, label: 'Source on GitHub' },
+      { href: REPO_URL, label: 'Lamp Circle on GitHub' },
     ],
   },
 ];
@@ -24,7 +24,7 @@ const COLUMNS = [
 const FINE_PRINT = [
   'Free to download and use.',
   'Lamp Circle comes with no songs or pads. You add your own audio files, or paste YouTube links.',
-  'YouTube downloads need yt-dlp and ffmpeg from Homebrew.',
+  'YouTube links need a one-time extra install on your Mac. If it’s missing, the app tells you how to add it.',
   'Maps hold timing and sections, never audio.',
 ];
 
@@ -38,7 +38,7 @@ export default function Footer() {
             <p className="mt-s6 max-w-xs text-mist">
               Live song maps for home-church and living-room worship.
             </p>
-            <p className="mt-s6 inline-flex items-center gap-s4 rounded-full border border-line bg-panel px-s5 py-s4 font-mono leading-snug text-cream/90">
+            <p className="mt-s6 inline-flex items-center gap-s4 rounded-full border border-line bg-panel px-s5 py-s4 font-medium leading-snug text-cream/90">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber opacity-70" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-amber" />

@@ -1,64 +1,93 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { Check, Download } from 'lucide-react';
-import { DOWNLOAD_URL, IMAGES, RELEASES_URL, useReducedMotion } from '../site';
-import { Button } from './ui';
+import { Check, Download, Repeat } from 'lucide-react';
+import { DOWNLOAD_URL, RELEASES_URL, useReducedMotion } from '../site';
+import { Button, SoundBars } from './ui';
 
 const POINTS = [
   'Free, for macOS 12 or later',
   'Your songs and maps stay on your Mac',
-  'Maps save as small .djw files with no audio. A map of a YouTube song fetches the audio when you import it',
+  'Hold, repeat or jump to any section while you lead',
   'One button downloads pads in all 12 keys for the space between songs',
 ];
 
-// A real map as the app writes it, cut short: a time for every beat and bar, and how each section lands.
-const DJW = `djw: 2
-song:
-  title: Way Maker
-  artist: Leeland
-  meter: 4/4
-  audio:
-    source: https://www.youtube.com/watch?v=iJCV_2H9xD0
-grid:
-  beats:
-    - 3.2
-    - 4.085
-    # … every beat
-  downbeats:
-    - 3.2
-    - 6.74
-    # … every bar
-sections:
-  # …
-  - name: Chorus 1
-    type: chorus
-    start_bar: 21
-    end_bar: 29
-    key: E
-    pickup_beats: 1
-    fade_in: 1
-    fade_out: 2
-    repeats: 2
-    jump_at: phrase`.split('\n');
+// Way Maker's sections, as the sample map marks them. Number keys 1 to 8 pick them in Perform.
+const SECTIONS = ['Intro', 'Verse 1', 'Chorus 1', 'Verse 2', 'Chorus 2', 'Bridge', 'Chorus 3', 'Tag'];
 
-/** One YAML line: keys in amber, values in cream, comments dimmed. */
-function DjwLine({ line }) {
-  const [, indent, dash, rest] = line.match(/^(\s*)(- )?(.*)$/);
-  if (rest.startsWith('#')) return <span className="block text-mist">{line}</span>;
-  const colon = rest.indexOf(':');
+// Four moments in Perform: the chorus plays its 2 passes, you hold it, you pick the bridge, the bridge comes in.
+const MOMENTS = [
+  { playing: 2, badge: '1 of 2', note: 'Next: Chorus 1 again, then Verse 2' },
+  { playing: 2, badge: 'Holding', hold: true, note: 'Chorus 1 loops until you pick a section or let go' },
+  { playing: 2, next: 5, note: 'Next: Bridge, at the end of the phrase' },
+  { playing: 5, note: 'Next: Chorus 3' },
+];
+
+/** A song map in Perform, stepping through the moments above. With less motion it holds on the hold. */
+function SongMap() {
+  const reduced = useReducedMotion();
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    if (reduced) return;
+    const timer = setInterval(() => setStep(prev => (prev + 1) % MOMENTS.length), 2800);
+    return () => clearInterval(timer);
+  }, [reduced]);
+
+  const { playing, next, badge, hold, note } = MOMENTS[reduced ? 1 : step];
+
   return (
-    <span className="block">
-      {indent}
-      {dash && <span className="text-mist">{dash}</span>}
-      {colon < 0 ? (
-        <span className="text-cream/90">{rest}</span>
-      ) : (
-        <>
-          <span className="text-amber-text">{rest.slice(0, colon + 1)}</span>
-          <span className="text-cream/90">{rest.slice(colon + 1)}</span>
-        </>
-      )}
-    </span>
+    <figure className="gs-in min-w-0 rounded-[2rem] bg-midnight/85 px-s6 py-half-s7 ring-1 ring-cream/10 backdrop-blur md:py-s6">
+      <figcaption className="sr-only">
+        Way Maker in Perform, with its eight sections from Intro to Tag. Chorus 1 plays twice. Hold it and it keeps
+        looping. Pick the bridge and it comes in at the end of the phrase.
+      </figcaption>
+      <div aria-hidden="true">
+        <div className="flex items-center justify-between gap-s4 leading-snug">
+          <span className="caps text-mist">Way Maker</span>
+          <SoundBars mode={reduced ? 'still' : 'beat'} className="h-4" barClassName="bg-amber" />
+        </div>
+        <div className="mt-s4 flex flex-wrap items-center justify-between gap-x-s4 gap-y-s2 leading-snug">
+          <p>
+            Now: <b>{SECTIONS[playing]}</b>
+          </p>
+          {badge && (
+            <span className="flex items-center gap-s3 rounded-full bg-amber/15 px-s4 py-s2 font-semibold text-amber-text">
+              <Repeat size={14} strokeWidth={2.5} />
+              {badge}
+            </span>
+          )}
+        </div>
+
+        <div className="mt-s5 grid grid-cols-2 gap-s3 sm:grid-cols-4 md:grid-cols-2 xl:grid-cols-4">
+          {SECTIONS.map((name, i) => (
+            <span
+              key={name}
+              className={`rounded-2xl px-s4 py-s3 font-semibold leading-snug transition-[background-color,box-shadow,color] duration-300 ${
+                i === playing
+                  ? 'bg-amber text-navy shadow-glow'
+                  : i === next
+                    ? 'bg-panel text-cream ring-2 ring-amber'
+                    : 'bg-panel text-cream/80 ring-1 ring-line'
+              }`}
+            >
+              <span className={`block ${i === playing ? 'text-navy/70' : 'text-mist'}`}>{i + 1}</span>
+              {name}
+            </span>
+          ))}
+        </div>
+
+        <p key={note} className="rise mt-s5 min-h-[2.5em] leading-snug text-mist">
+          {note}
+        </p>
+        <span
+          className={`mt-s4 inline-block rounded-full border px-s5 py-s4 font-semibold leading-snug transition-colors duration-300 ${
+            hold ? 'border-amber bg-amber/15 text-amber-text' : 'border-line text-cream/80'
+          }`}
+        >
+          {hold ? 'Holding · let go' : 'Hold here'}
+        </span>
+      </div>
+    </figure>
   );
 }
 
@@ -83,10 +112,7 @@ export default function GetStarted() {
 
   return (
     <section id="download" ref={root} className="bg-paper px-s5 py-s9 sm:px-s7 md:py-half-s11">
-      <div className="on-dark relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] bg-navy text-cream shadow-card md:rounded-[3rem]">
-        <img src={IMAGES.guitar.src} alt={IMAGES.guitar.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-navy via-navy/85 to-navy/40" />
-
+      <div className="on-dark relative mx-auto max-w-6xl overflow-hidden rounded-[2.5rem] bg-navy bg-[radial-gradient(60%_60%_at_80%_45%,rgb(240_166_75/0.14),transparent)] text-cream shadow-card md:rounded-[3rem]">
         <div className="relative grid gap-s7 px-s6 py-half-s9 sm:px-s7 md:grid-cols-[1.15fr_1fr] md:items-center md:px-s8 md:py-half-s10">
           <div>
             <p className="gs-in caps text-amber-text">Get started</p>
@@ -96,7 +122,7 @@ export default function GetStarted() {
             <p className="gs-in mt-s6 max-w-lg text-cream/80">
               Download Lamp Circle and add a song you lead often: paste a YouTube link or drop in an audio file. Tap 8
               beats or more, let the app map the rest, and press 1 to 8 as each section starts. Shape the transitions,
-              save the .djw, and the song is ready for a set.
+              save it, and the song is ready for a set.
             </p>
             <ul className="mt-s7 space-y-s4">
               {POINTS.map(point => (
@@ -117,19 +143,7 @@ export default function GetStarted() {
             </div>
           </div>
 
-          <figure className="gs-in min-w-0 rounded-[2rem] bg-midnight/85 px-s6 py-half-s7 ring-1 ring-cream/10 backdrop-blur md:py-s6">
-            <figcaption className="flex items-center justify-between gap-s5 font-mono leading-snug text-mist">
-              <span>way-maker.djw</span>
-              <span>YAML · no audio</span>
-            </figcaption>
-            <pre className="mt-s5 overflow-x-auto font-mono">
-              <code>
-                {DJW.map((line, i) => (
-                  <DjwLine key={i} line={line} />
-                ))}
-              </code>
-            </pre>
-          </figure>
+          <SongMap />
         </div>
       </div>
     </section>

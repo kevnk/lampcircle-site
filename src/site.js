@@ -17,10 +17,6 @@ export const IMAGES = {
     src: unsplash('1674141052966-02ca8a4f0591', 1800),
     alt: 'Warm lamplight falling through a doorway onto a wooden floor.',
   },
-  guitar: {
-    src: unsplash('1773167307888-6f1512ca1971', 1400),
-    alt: 'An acoustic guitar in low amber light, close on the sound hole and strings.',
-  },
 };
 
 const QUERY = '(prefers-reduced-motion: reduce)';

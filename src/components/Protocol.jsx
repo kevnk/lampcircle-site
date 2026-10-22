@@ -123,7 +123,7 @@ function ScanGrid() {
       <rect x={colX(PICKUP) - 12} y="62" width="24" height="150" rx="12" fill="#F0A64B" fillOpacity="0.18" stroke="#F0A64B" strokeWidth="1.5" />
       <rect x={colX(LAND) - 4} y="52" width="8" height="170" rx="4" fill="#F0A64B" />
 
-      <g fontFamily="JetBrains Mono, monospace" fontSize="13" fill="currentColor">
+      <g fontSize="13" fill="currentColor">
         <text x={colX(FADE)} y="44" textAnchor="middle" fillOpacity="0.7">fade</text>
         <text x={colX(PICKUP) + 2} y="30" textAnchor="middle" fillOpacity="0.7">pickup</text>
         <text x={colX(LAND)} y="44" textAnchor="middle" fill="#F5B35E" fontSize="17" fontWeight="500">1</text>
@@ -208,7 +208,7 @@ function PadWave() {
       <path d={WAVE} fill="none" stroke="currentColor" strokeOpacity="0.25" strokeWidth="2.5" strokeLinejoin="round" />
       <path className="wave-live" d={WAVE} fill="none" stroke="#F0A64B" strokeWidth="3.5" strokeLinejoin="round" strokeLinecap="round" />
       <circle className="wave-pulse" cx="426" cy="34" r="6" fill="#F0A64B" />
-      <g fontFamily="JetBrains Mono, monospace" fontSize="17" fill="currentColor">
+      <g fontSize="17" fill="currentColor">
         <text x="14" y="244" fillOpacity="0.7">song in E</text>
         <text x="310" y="244" textAnchor="middle" fill="#F5B35E">pad E → A</text>
         <text x="586" y="244" textAnchor="end" fillOpacity="0.7">song in A</text>
@@ -225,38 +225,32 @@ const STEPS = [
   {
     n: '01',
     title: 'A time for every beat',
-    body: 'Each tap is a beat, and Shift marks beat 1. A tap snaps onto the drum hit or strum it was reaching for. Gaps are spaced evenly, and the app can follow the recording for the rest, so a live take that drifts still lines up.',
-    spec: 'beats: [3.2, 4.085, 4.97, …] · downbeats: [3.2, 6.74, …]',
+    body: 'Each tap is a beat, and Shift marks beat 1. A tap snaps onto a nearby drum hit or strum in the song. Gaps are spaced evenly, and the app can follow the recording for the rest, so a live take that drifts still lines up.',
     Art: BarClock,
     artWidth: 'max-w-[min(100%,46vh)]',
     surface: 'bg-cream text-navy',
     muted: 'text-smoke',
     accent: 'text-amber-deep',
-    chip: 'border-navy/15',
   },
   {
     n: '02',
     title: 'Fade, pickup, then the 1',
     body: 'Each section’s fade-in finishes before its pickup, so the singers’ early notes play at full volume. Then the section lands on its bar’s 1.',
-    spec: '{ name: Chorus 1, start_bar: 21, pickup_beats: 1, fade_in: 1 }',
     Art: ScanGrid,
     artWidth: 'max-w-[min(100%,62vh)]',
     surface: 'on-dark bg-navy text-cream',
     muted: 'text-mist',
     accent: 'text-amber-text',
-    chip: 'border-cream/20',
   },
   {
     n: '03',
     title: 'Pads move in 4ths',
     body: 'When a song ends, a pad in the key it ended in keeps sounding. Sets suggests a way into the next song’s key, moving around the circle of 4ths when the keys are close, and Simple mode walks it one pad every 4 bars. Then the next song comes in on the bar.',
-    spec: 'live pad: E → A · way in: E, A',
     Art: PadWave,
     artWidth: 'max-w-[min(100%,70vh)]',
     surface: 'on-dark bg-panel text-cream bg-[radial-gradient(60%_50%_at_70%_45%,rgb(240_166_75/0.12),transparent)]',
     muted: 'text-mist',
     accent: 'text-amber-text',
-    chip: 'border-cream/20',
   },
 ];
 
@@ -325,7 +319,7 @@ export default function Protocol() {
         </p>
       </div>
 
-      {STEPS.map(({ n, title, body, spec, Art, artWidth, surface, muted, accent, chip }, i) => (
+      {STEPS.map(({ n, title, body, Art, artWidth, surface, muted, accent }, i) => (
         <article
           key={n}
           className={`protocol-card relative flex px-s4 py-half-s6 md:px-s6 md:py-half-s7 ${stack ? 'h-screen' : 'min-h-screen'}`}
@@ -336,14 +330,11 @@ export default function Protocol() {
           >
             <div className="card-content mx-auto grid w-full max-w-6xl items-center gap-s7 md:grid-cols-2 md:gap-s8">
               <div className="order-2 md:order-1">
-                <p className={`font-mono leading-snug ${accent}`}>
+                <p className={`font-semibold leading-snug ${accent}`}>
                   {n} <span className="opacity-60">/ 03</span>
                 </p>
                 <h3 className="mt-s4 text-t1 font-extrabold leading-tight tracking-tight sm:text-t2 md:text-t3">{title}</h3>
                 <p className={`mt-s5 max-w-md md:mt-s6 ${muted}`}>{body}</p>
-                <p className={`mt-s6 inline-block max-w-full break-words rounded-2xl border ${chip} px-s5 py-s3 font-mono leading-snug md:mt-s7 ${muted}`}>
-                  {spec}
-                </p>
               </div>
               <div className={`order-1 mx-auto w-full md:order-2 ${artWidth}`}>
                 <Art />
