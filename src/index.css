@@ -125,7 +125,7 @@
   }
 }
 
-/* Perform's beat counter: each bar lights on its beat, one bar at 72 BPM. */
+/* The Worship screen's beat counter: each bar lights on its beat, one bar at 72 BPM. */
 @keyframes beat {
   0%,
   20% {

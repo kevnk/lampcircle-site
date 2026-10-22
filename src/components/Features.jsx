@@ -93,7 +93,7 @@ function TapShuffler() {
   );
 }
 
-/* ── Card 2: Prep every landing ── one section's settings, stepping through four sections of the song. */
+/* ── Card 2: Map every landing ── one section's settings, stepping through four sections of the song. */
 
 const PREP = [
   { name: 'Verse 1', bar: 5, pickup: '1 beat', fadeIn: '1 beat', fadeOut: '1 beat', repeats: '×1', jump: 'Next bar' },
@@ -124,13 +124,13 @@ function PrepCard() {
   return (
     <div className="on-dark flex h-full flex-col rounded-[2rem] bg-midnight px-s6 py-half-s7 text-cream">
       <p className="sr-only">
-        Example prep for Chorus 1: a 1-beat pickup, a 1-beat fade in, a 2-beat fade out, 2 repeats, and jumps that land
+        Example map for Chorus 1: a 1-beat pickup, a 1-beat fade in, a 2-beat fade out, 2 repeats, and jumps that land
         at the end of the phrase.
       </p>
       <div className="flex items-center justify-between leading-snug" aria-hidden="true">
         <span className="caps flex items-center gap-s4 text-t-1 text-cream">
           <span className="h-2 w-2 rounded-full bg-amber" />
-          Prep
+          Map
         </span>
         <span className="text-t-1 text-mist">Lands on bar {section.bar}</span>
       </div>
@@ -149,7 +149,7 @@ function PrepCard() {
   );
 }
 
-/* ── Card 3: Perform the set ── in the gap after a song, a cursor taps the next key's pad, it comes in on the
+/* ── Card 3: Worship through the set ── in the gap after a song, a cursor taps the next key's pad, it comes in on the
    next bar, then the cursor starts the next song. */
 
 // Key names as the app spells them, in circle-of-4ths order.
@@ -285,14 +285,14 @@ const CARDS = [
   },
   {
     step: '02 · Transitions + Save',
-    title: 'Prep every landing',
+    title: 'Map every landing',
     body: 'Give each section a pickup for singers who come in early, fades at its loop point, a repeat count, and a rule for when a jump lands: next beat, next bar, end of phrase or end of section. Audition the loop, then save the song and add it to a set.',
     Demo: PrepCard,
   },
   {
-    step: '03 · Sets + Perform',
-    title: 'Perform the set',
-    body: 'Put ready songs in order. Each gap gets a live pad and a suggested way into the next key, or pads you pick. In Perform, number keys queue sections and H holds one. When a song ends, the pad plays on until you start the next song on the bar.',
+    step: '03 · Sets + Worship',
+    title: 'Worship through the set',
+    body: 'Put ready songs in order. Each gap gets a live pad and a suggested way into the next key, or pads you pick. In Worship, number keys queue sections and H holds one. When a song ends, the pad plays on until you start the next song on the bar.',
     Demo: PadScheduler,
   },
 ];
@@ -329,7 +329,7 @@ export default function Features() {
       <div className="mx-auto max-w-7xl">
         <div className="features-head max-w-2xl">
           <p className="caps text-amber-deep">What it does</p>
-          <h2 className="mt-s5 text-t2 font-extrabold leading-tight tracking-tight md:text-t3">Tap. Prep. Perform.</h2>
+          <h2 className="mt-s5 text-t2 font-extrabold leading-tight tracking-tight md:text-t3">Tap. Map. Worship.</h2>
           <p className="mt-s6 text-smoke">
             Three steps, in the order you&rsquo;ll use them. Map a song once and it&rsquo;s ready for every set
             after.

@@ -4,7 +4,7 @@ import { DOWNLOAD_URL } from '../site';
 import { Button, GithubLink } from './ui';
 
 const LINKS = [
-  { href: '#features', label: 'Tap · Prep · Perform' },
+  { href: '#features', label: 'Tap · Map · Worship' },
   { href: '#why', label: 'Why' },
   { href: '#how', label: 'How it works' },
 ];

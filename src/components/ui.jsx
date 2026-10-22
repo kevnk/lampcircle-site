@@ -35,7 +35,7 @@ export function GithubLink({ className = '' }) {
   );
 }
 
-// Beat 1 tallest, like the bars around the lantern and Perform's beat counter.
+// Beat 1 tallest, like the bars around the lantern and the Worship screen's beat counter.
 const HEIGHTS = [1, 0.5, 0.72, 0.5];
 
 /**

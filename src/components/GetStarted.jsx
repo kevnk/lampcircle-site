@@ -11,10 +11,10 @@ const POINTS = [
   'One button downloads pads in all 12 keys for the space between songs',
 ];
 
-// Way Maker's sections, as the sample map marks them. Number keys 1 to 8 pick them in Perform.
+// Way Maker's sections, as the sample map marks them. Number keys 1 to 8 pick them in Worship.
 const SECTIONS = ['Intro', 'Verse 1', 'Chorus 1', 'Verse 2', 'Chorus 2', 'Bridge', 'Chorus 3', 'Tag'];
 
-// Four moments in Perform: the chorus plays its 2 passes, you hold it, you pick the bridge, the bridge comes in.
+// Four moments in Worship: the chorus plays its 2 passes, you hold it, you pick the bridge, the bridge comes in.
 const MOMENTS = [
   { playing: 2, badge: '1 of 2', note: 'Next: Chorus 1 again, then Verse 2' },
   { playing: 2, badge: 'Holding', hold: true, note: 'Chorus 1 loops until you pick a section or let go' },
@@ -22,7 +22,7 @@ const MOMENTS = [
   { playing: 5, note: 'Next: Chorus 3' },
 ];
 
-/** A song map in Perform, stepping through the moments above. With less motion it holds on the hold. */
+/** A song map in Worship, stepping through the moments above. With less motion it holds on the hold. */
 function SongMap() {
   const reduced = useReducedMotion();
   const [step, setStep] = useState(0);
@@ -38,7 +38,7 @@ function SongMap() {
   return (
     <figure className="gs-in min-w-0 rounded-[2rem] bg-midnight/85 px-s6 py-half-s7 ring-1 ring-cream/10 backdrop-blur md:py-s6">
       <figcaption className="sr-only">
-        Way Maker in Perform, with its eight sections from Intro to Tag. Chorus 1 plays twice. Hold it and it keeps
+        Way Maker in Worship, with its eight sections from Intro to Tag. Chorus 1 plays twice. Hold it and it keeps
         looping. Pick the bridge and it comes in at the end of the phrase.
       </figcaption>
       <div aria-hidden="true">
