@@ -260,8 +260,8 @@ const STEPS = [
   },
 ];
 
-// Room the card frame takes around its content: the article's padding plus the panel's.
-const FRAME = 120;
+// Room the card frame takes around its content: the article's padding plus the panel's (2 × (half-s7 + s7) at md).
+const FRAME = 117;
 
 export default function Protocol() {
   const root = useRef(null);
@@ -316,10 +316,10 @@ export default function Protocol() {
 
   return (
     <section id="how" ref={root} className="on-dark relative bg-midnight text-cream">
-      <div className="mx-auto max-w-7xl px-5 pb-10 pt-24 sm:px-8 md:pb-16 md:pt-32">
+      <div className="mx-auto max-w-7xl px-s6 pb-s7 pt-s9 sm:px-s7 md:pb-s8 md:pt-double-s8">
         <p className="caps text-amber-text">How it works</p>
-        <h2 className="mt-4 max-w-3xl text-4xl font-extrabold tracking-tight md:text-6xl">Three rules it plays by.</h2>
-        <p className="mt-5 max-w-xl text-lg leading-relaxed text-mist">
+        <h2 className="mt-s5 max-w-3xl text-t2 font-extrabold leading-tight tracking-tight md:text-t3">Three rules it plays by.</h2>
+        <p className="mt-s6 max-w-xl text-mist">
           Under every screen sit three small rules about time and key. They&rsquo;re why a section lands where you
           expect it to.
         </p>
@@ -328,20 +328,20 @@ export default function Protocol() {
       {STEPS.map(({ n, title, body, spec, Art, artWidth, surface, muted, accent, chip }, i) => (
         <article
           key={n}
-          className={`protocol-card relative flex p-3 md:p-5 ${stack ? 'h-screen' : 'min-h-screen'}`}
+          className={`protocol-card relative flex px-s4 py-half-s6 md:px-s6 md:py-half-s7 ${stack ? 'h-screen' : 'min-h-screen'}`}
           style={{ zIndex: i + 1 }}
         >
           <div
-            className={`card-inner flex flex-1 flex-col justify-center overflow-hidden rounded-[2.5rem] px-6 py-10 will-change-transform md:rounded-[3rem] md:px-16 ${surface}`}
+            className={`card-inner flex flex-1 flex-col justify-center overflow-hidden rounded-[2.5rem] px-s6 py-s7 will-change-transform md:rounded-[3rem] md:px-s8 ${surface}`}
           >
-            <div className="card-content mx-auto grid w-full max-w-6xl items-center gap-8 md:grid-cols-2 md:gap-16">
+            <div className="card-content mx-auto grid w-full max-w-6xl items-center gap-s7 md:grid-cols-2 md:gap-s8">
               <div className="order-2 md:order-1">
-                <p className={`font-mono text-sm ${accent}`}>
+                <p className={`font-mono leading-snug ${accent}`}>
                   {n} <span className="opacity-60">/ 03</span>
                 </p>
-                <h3 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl md:text-6xl">{title}</h3>
-                <p className={`mt-4 max-w-md text-base leading-relaxed md:mt-6 md:text-lg ${muted}`}>{body}</p>
-                <p className={`mt-5 inline-block max-w-full break-words rounded-2xl border ${chip} px-3 py-1.5 font-mono text-[11px] md:mt-8 md:text-xs ${muted}`}>
+                <h3 className="mt-s4 text-t1 font-extrabold leading-tight tracking-tight sm:text-t2 md:text-t3">{title}</h3>
+                <p className={`mt-s5 max-w-md md:mt-s6 ${muted}`}>{body}</p>
+                <p className={`mt-s6 inline-block max-w-full break-words rounded-2xl border ${chip} px-s5 py-s3 font-mono leading-snug md:mt-s7 ${muted}`}>
                   {spec}
                 </p>
               </div>

@@ -21,7 +21,7 @@ export default function App() {
     <>
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-amber focus:px-5 focus:py-2.5 focus:font-bold focus:text-navy"
+        className="sr-only leading-snug focus:not-sr-only focus:fixed focus:left-s5 focus:top-s5 focus:z-[70] focus:rounded-full focus:bg-amber focus:px-s6 focus:py-s4 focus:font-bold focus:text-navy"
       >
         Skip to content
       </a>

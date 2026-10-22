@@ -30,15 +30,15 @@ const FINE_PRINT = [
 
 export default function Footer() {
   return (
-    <footer className="on-dark rounded-t-[4rem] bg-midnight px-6 pb-10 pt-16 text-cream sm:px-10 md:pt-20">
+    <footer className="on-dark rounded-t-[4rem] bg-midnight px-s6 pb-s7 pt-s8 text-cream sm:px-s7 md:pt-half-s10">
       <div className="mx-auto max-w-7xl">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
+        <div className="grid gap-s7 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
           <div>
             <img src="/brand/logo-dark.webp" alt="Lamp Circle" width="600" height="376" loading="lazy" className="h-24 w-auto" />
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-mist">
+            <p className="mt-s6 max-w-xs text-mist">
               Live song maps for home-church and living-room worship.
             </p>
-            <p className="mt-6 inline-flex items-center gap-2.5 rounded-full border border-line bg-panel px-4 py-2 font-mono text-[11px] text-cream/90">
+            <p className="mt-s6 inline-flex items-center gap-s4 rounded-full border border-line bg-panel px-s5 py-s4 font-mono leading-snug text-cream/90">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber opacity-70" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-amber" />
@@ -50,7 +50,7 @@ export default function Footer() {
           {COLUMNS.map(column => (
             <nav key={column.title} aria-label={column.title}>
               <p className="caps text-mist">{column.title}</p>
-              <ul className="mt-5 space-y-3 text-sm font-medium">
+              <ul className="mt-s6 space-y-s5 font-medium leading-snug">
                 {column.links.map(link => (
                   <li key={link.label}>
                     <a href={link.href} className="lift inline-block text-cream/85 hover:text-amber-text">
@@ -64,7 +64,7 @@ export default function Footer() {
 
           <div>
             <p className="caps text-mist">Fine print</p>
-            <ul className="mt-5 space-y-3 text-sm leading-relaxed text-cream/70">
+            <ul className="mt-s6 space-y-s4 text-cream/70">
               {FINE_PRINT.map(line => (
                 <li key={line}>{line}</li>
               ))}
@@ -72,11 +72,11 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-2 border-t border-line pt-6 text-xs text-mist sm:flex-row sm:justify-between">
+        <div className="mt-s8 flex flex-col gap-s4 border-t border-line pt-s6 leading-snug text-mist sm:flex-row sm:justify-between">
           <p>© 2026 Lamp Circle</p>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-s4">
             <p>Made for small rooms.</p>
-            <GithubLink className="-my-2.5 h-10 w-10 text-cream/85 hover:text-amber-text" />
+            <GithubLink className="-my-s4 h-10 w-10 text-cream/85 hover:text-amber-text" />
           </div>
         </div>
       </div>

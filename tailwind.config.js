@@ -1,10 +1,37 @@
 /** @type {import('tailwindcss').Config} */
 // Colors are Lampcircle's brand roles (the app's docs/brand/README.md), laid onto the Midnight Luxe structure:
 // midnight navy for the dark, amber for the accent, cream for the light.
+// Type, spacing and line-height follow the golden ratio (GOLDEN-RATIO-AUDIT.md).
+const PHI = 1.61803398875;
+const rem = n => `${+n.toFixed(6)}rem`;
+
+// Spacer ladder: s6 = 1.5rem, each step φ apart. Halves and doubles are for top/bottom padding only.
+const spacing = {};
+for (let n = 1; n <= 11; n++) {
+  const step = 1.5 * PHI ** (n - 6);
+  spacing[`s${n}`] = rem(step);
+  spacing[`half-s${n}`] = rem(step / 2);
+  spacing[`double-s${n}`] = rem(step * 2);
+}
+
+// Type scale: t0 = 1rem, each step φ apart.
+const fontSize = {};
+for (let n = -1; n <= 5; n++) fontSize[`t${n}`] = rem(PHI ** n);
+
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
+    // Replaced, not extended, so only the φ sizes and line-heights exist.
+    fontSize,
+    lineHeight: {
+      none: '1', // glyphs centered in fixed boxes
+      tight: '1.145898',
+      snug: '1.236064',
+      read: '1.381966',
+      loose: '1.618034',
+    },
     extend: {
+      spacing,
       colors: {
         midnight: '#070D13',
         navy: '#10283A',

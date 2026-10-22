@@ -3,6 +3,8 @@ import gsap from 'gsap';
 import { useReducedMotion } from '../site';
 import { SoundBars } from './ui';
 
+// The demos are small pictures of the app, so their small print sits on t-1, under the page's t0 floor.
+
 /* ── Card 1: Tap the beat ── three stacked cards that shuffle every 3 seconds. */
 
 const TAP_CARDS = [
@@ -26,7 +28,7 @@ function TapVisual({ id }) {
   }
   if (id === 'section') {
     return (
-      <div className="flex h-8 gap-1 text-[10px] font-semibold" aria-hidden="true">
+      <div className="flex h-8 gap-s2 text-t-1 font-semibold leading-snug" aria-hidden="true">
         <span className="flex flex-[5] items-center justify-center rounded-full bg-shade-light">Intro</span>
         <span className="flex flex-[12] items-center justify-center rounded-full bg-shade-mid">Verse 1</span>
         <span className="flex flex-[8] items-center justify-center rounded-full bg-navy text-cream ring-2 ring-amber">
@@ -36,8 +38,8 @@ function TapVisual({ id }) {
     );
   }
   return (
-    <div className="flex items-center text-[12px] font-bold">
-      <span className="rounded-full px-3.5 py-2 ring-2 ring-amber">Map the rest from the song</span>
+    <div className="flex items-center text-t-1 font-bold leading-snug">
+      <span className="rounded-full px-s5 py-s4 ring-2 ring-amber">Map the rest from the song</span>
     </div>
   );
 }
@@ -65,7 +67,7 @@ function TapShuffler() {
         return (
           <div
             key={card.id}
-            className="absolute inset-x-0 bottom-0 flex h-[11rem] flex-col justify-between rounded-[2rem] border border-navy/10 bg-paper p-5 shadow-card"
+            className="absolute inset-x-0 bottom-0 flex h-[11rem] flex-col justify-between rounded-[2rem] border border-navy/10 bg-paper px-s6 py-half-s7 shadow-card"
             style={{
               zIndex: 3 - depth,
               transform: `translateY(${-depth * 20}px) scale(${1 - depth * 0.06})`,
@@ -73,15 +75,15 @@ function TapShuffler() {
               transition: 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)',
             }}
           >
-            <div className="flex items-center justify-between gap-2">
-              <span className="caps text-smoke">{card.label}</span>
-              <span className="rounded-full border border-navy/20 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider">
+            <div className="flex items-center justify-between gap-s4">
+              <span className="caps text-t-1 text-smoke">{card.label}</span>
+              <span className="rounded-full border border-navy/20 px-s4 py-s1 font-mono text-t-1 uppercase tracking-wider">
                 {card.chip}
               </span>
             </div>
-            <p className="flex items-baseline gap-3">
-              <span className="whitespace-nowrap text-[1.7rem] font-extrabold tracking-tight">{card.title}</span>
-              <span className="font-mono text-xs text-smoke">{card.meta}</span>
+            <p className="flex items-baseline gap-s4 leading-snug">
+              <span className="whitespace-nowrap text-t1 font-extrabold tracking-tight">{card.title}</span>
+              <span className="font-mono text-t-1 text-smoke">{card.meta}</span>
             </p>
             <TapVisual id={card.id} />
           </div>
@@ -134,19 +136,19 @@ function PrepFeed() {
   const lines = reduced ? FEED.slice(2, 6) : done;
 
   return (
-    <div className="on-dark flex h-full flex-col rounded-[2rem] bg-midnight p-5 text-cream">
-      <div className="flex items-center justify-between">
-        <span className="caps flex items-center gap-2.5 text-cream">
+    <div className="on-dark flex h-full flex-col rounded-[2rem] bg-midnight px-s6 py-half-s7 text-cream">
+      <div className="flex items-center justify-between leading-snug">
+        <span className="caps flex items-center gap-s4 text-t-1 text-cream">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber opacity-70" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-amber" />
           </span>
           Live feed
         </span>
-        <span className="font-mono text-[11px] text-mist">way-maker.djw</span>
+        <span className="font-mono text-t-1 text-mist">way-maker.djw</span>
       </div>
       <p className="sr-only">Example prep notes: {FEED.join('. ')}.</p>
-      <div className="mt-auto space-y-1 font-mono text-[12px] leading-5" aria-hidden="true">
+      <div className="mt-auto space-y-s2 font-mono text-t-1" aria-hidden="true">
         {lines.map((text, i) => (
           <p key={`${text}-${i}`} className="whitespace-pre-wrap text-mist" style={{ opacity: 0.75 + (i / lines.length) * 0.25 }}>
             {text}
@@ -155,7 +157,7 @@ function PrepFeed() {
         {!reduced && (
           <p className="whitespace-pre-wrap text-cream">
             {typing}
-            <span className="blink ml-px inline-block h-[1.05em] w-[0.55em] translate-y-[3px] bg-amber" />
+            <span className="blink ml-s1 inline-block h-[1.05em] w-[0.55em] translate-y-[3px] bg-amber" />
           </p>
         )}
       </div>
@@ -228,21 +230,21 @@ function PadScheduler() {
   }, [reduced]);
 
   return (
-    <div ref={root} className="relative flex h-full flex-col rounded-[2rem] border border-navy/10 bg-paper p-4 sm:p-5">
-      <div className="flex gap-1 rounded-full bg-navy/[0.06] p-1 text-[11px] font-semibold" aria-hidden="true">
+    <div ref={root} className="relative flex h-full flex-col rounded-[2rem] border border-navy/10 bg-paper p-s5 sm:px-s6 sm:py-half-s7">
+      <div className="flex gap-s2 rounded-full bg-navy/[0.06] p-s2 text-t-1 font-semibold leading-snug" aria-hidden="true">
         {PAD_MODES.map(name => (
           <span
             key={name}
-            className={`flex-1 rounded-full py-1.5 text-center ${name === 'Advanced' ? 'bg-amber/15 text-amber-deep ring-1 ring-amber' : 'text-smoke'}`}
+            className={`flex-1 rounded-full py-s3 text-center ${name === 'Advanced' ? 'bg-amber/15 text-amber-deep ring-1 ring-amber' : 'text-smoke'}`}
           >
             {name}
           </span>
         ))}
       </div>
 
-      <div className="mt-3 flex items-center justify-between">
-        <span className="caps text-smoke">Live pad</span>
-        <span className="font-mono text-[11px] text-navy">
+      <div className="mt-s4 flex items-center justify-between leading-snug">
+        <span className="caps text-t-1 text-smoke">Live pad</span>
+        <span className="font-mono text-t-1 text-navy">
           {from} → {nextKey}
         </span>
       </div>
@@ -251,12 +253,12 @@ function PadScheduler() {
         Example: a song in E has ended and its pad is sounding. The next song is in A, one step around the circle of
         4ths. Tap the A pad and it comes in on the next bar, then start the next song on the next bar.
       </p>
-      <div className="mt-2 grid grid-cols-6 gap-1.5" aria-hidden="true">
+      <div className="mt-s4 grid grid-cols-6 gap-s3" aria-hidden="true">
         {CIRCLE_OF_FOURTHS.map(key => (
           <span
             key={key}
             data-pad={key}
-            className={`flex h-10 items-center justify-center rounded-full text-[13px] font-bold transition-[background-color,box-shadow,color] duration-300 ${
+            className={`flex h-10 items-center justify-center rounded-full font-bold leading-none transition-[background-color,box-shadow,color] duration-300 ${
               key === now
                 ? 'bg-amber text-navy shadow-glow'
                 : key === queued
@@ -269,9 +271,9 @@ function PadScheduler() {
         ))}
       </div>
 
-      <div className="mt-auto flex items-center justify-between gap-2" aria-hidden="true">
+      <div className="mt-auto flex items-center justify-between gap-s4" aria-hidden="true">
         <SoundBars mode={reduced ? 'still' : 'beat'} className="h-6" barClassName="w-[5px] bg-navy" />
-        <span data-start className="whitespace-nowrap rounded-full bg-navy px-3.5 py-2.5 text-[12px] font-bold text-cream">
+        <span data-start className="whitespace-nowrap rounded-full bg-navy px-s5 py-s4 text-t-1 font-bold leading-snug text-cream">
           Start Intro on next bar
         </span>
       </div>
@@ -339,29 +341,29 @@ export default function Features() {
   }, [reduced]);
 
   return (
-    <section id="features" ref={root} className="bg-paper px-5 py-24 sm:px-8 md:py-36">
+    <section id="features" ref={root} className="bg-paper px-s6 py-s9 sm:px-s7 md:py-half-s11">
       <div className="mx-auto max-w-7xl">
         <div className="features-head max-w-2xl">
           <p className="caps text-amber-deep">What it does</p>
-          <h2 className="mt-4 text-4xl font-extrabold tracking-tight md:text-6xl">Tap. Prep. Perform.</h2>
-          <p className="mt-5 text-lg leading-relaxed text-smoke">
+          <h2 className="mt-s5 text-t2 font-extrabold leading-tight tracking-tight md:text-t3">Tap. Prep. Perform.</h2>
+          <p className="mt-s6 text-smoke">
             Three steps, in the order you&rsquo;ll use them. Map a song once and it&rsquo;s ready for every set
             after.
           </p>
         </div>
 
-        <div className="feature-grid mt-14 grid gap-6 md:mt-20 lg:grid-cols-3">
+        <div className="feature-grid mt-s8 grid gap-s6 lg:grid-cols-3">
           {CARDS.map(({ step, title, body, Demo }) => (
             <article
               key={title}
-              className="feature-card flex flex-col rounded-[2rem] border border-navy/10 bg-cream p-5 shadow-card md:p-6"
+              className="feature-card flex flex-col rounded-[2rem] border border-navy/10 bg-cream px-s6 py-half-s7 shadow-card md:py-s6"
             >
               <div className="h-[15rem]">
                 <Demo />
               </div>
-              <p className="mt-7 font-mono text-xs text-amber-deep">{step}</p>
-              <h3 className="mt-2 text-2xl font-extrabold tracking-tight">{title}</h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-smoke">{body}</p>
+              <p className="mt-s6 font-mono leading-snug text-amber-deep">{step}</p>
+              <h3 className="mt-s4 text-t1 font-extrabold leading-snug tracking-tight">{title}</h3>
+              <p className="mt-s4 text-smoke">{body}</p>
             </article>
           ))}
         </div>

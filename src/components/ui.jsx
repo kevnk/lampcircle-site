@@ -3,9 +3,9 @@ import { REPO_URL } from '../site';
 const VARIANTS = { amber: 'btn-amber', ghost: 'btn-ghost' };
 
 const SIZES = {
-  sm: 'px-4 py-2.5 text-[13px]',
-  md: 'px-6 py-3.5 text-sm',
-  lg: 'px-8 py-5 text-base md:px-10 md:py-6 md:text-lg',
+  sm: 'px-s5 py-s4',
+  md: 'px-s6 py-s5',
+  lg: 'px-s7 py-half-s7 md:py-s6',
 };
 
 /** A pill link with the magnetic hover: it swells a little and a fill slides up behind the label. */

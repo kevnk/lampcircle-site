@@ -8,7 +8,18 @@
   }
 
   body {
-    @apply bg-paper font-sans text-navy antialiased;
+    @apply bg-paper font-sans text-t0 leading-loose text-navy antialiased;
+  }
+
+  /* Headings even out their lines; running text avoids a lone word on the last line. */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p,
+  li {
+    text-wrap: pretty;
   }
 
   /* Film grain over everything, so no gradient reads flat. */
@@ -39,7 +50,7 @@
 @layer components {
   /* Small spaced capitals, after the thin CIRCLE in the wordmark. */
   .caps {
-    @apply text-[11px] font-semibold uppercase tracking-[0.2em];
+    @apply text-t0 font-semibold uppercase leading-snug tracking-[0.2em];
   }
 
   /* Magnetic pill: a slight swell, and a fill that slides up from below. */
@@ -50,9 +61,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
+    gap: theme('spacing.s4');
     border-radius: 9999px;
+    font-size: theme('fontSize.t0');
     font-weight: 700;
+    line-height: theme('lineHeight.snug');
     white-space: nowrap;
     transition:
       transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),

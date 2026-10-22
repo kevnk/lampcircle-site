@@ -33,28 +33,29 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-t from-black via-midnight/85 to-navy/30" />
       <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/60 to-transparent" />
 
-      <div className="relative mx-auto w-full max-w-7xl px-5 pb-14 sm:px-8 md:pb-20">
-        <p className="hero-in caps flex items-center gap-3 text-amber-text">
+      <div className="relative mx-auto w-full max-w-7xl px-s6 pb-half-s9 sm:px-s7 md:pb-half-s10">
+        <p className="hero-in caps flex items-center gap-s4 text-amber-text">
           <SoundBars mode="breathe" className="h-3.5" />
           Live song maps · Free for Mac
         </p>
 
-        <h1 className="mt-5">
-          <span className="hero-in block text-[1.9rem] font-extrabold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl">
+        {/* The sans line stops at t2 so the serif line, up to t5, stays about 4× larger. */}
+        <h1 className="mt-s6">
+          <span className="hero-in block text-t1 font-extrabold leading-tight tracking-tight sm:text-t2">
             Living-room worship meets
           </span>
-          <span className="hero-in -ml-1 block font-drama text-[clamp(3.9rem,16vw,12rem)] italic leading-[0.9] text-cream md:-ml-2">
+          <span className="hero-in -ml-s2 block font-drama text-[clamp(theme(fontSize.t3),16vw,theme(fontSize.t5))] italic leading-tight text-cream md:-ml-s4">
             the downbeat.
           </span>
         </h1>
 
-        <p className="hero-in mt-6 max-w-xl text-base leading-relaxed text-cream/80 md:text-lg">
+        <p className="hero-in mt-s6 max-w-xl text-cream/80">
           Lamp Circle is a free Mac app for leading worship in a small room. Tap the beat while a song plays and
           mark its sections. Every section then lands on its bar&rsquo;s 1, and a live pad carries you from one
           song to the next.
         </p>
 
-        <div className="hero-in mt-8 flex flex-wrap items-center gap-3">
+        <div className="hero-in mt-s7 flex flex-wrap items-center gap-s5">
           <Button href={DOWNLOAD_URL}>
             <Download size={18} strokeWidth={2.5} aria-hidden="true" />
             Download for Mac
