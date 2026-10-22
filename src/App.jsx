@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Features from './components/Features';
+import Walkthrough from './components/Walkthrough';
 import Manifesto from './components/Manifesto';
 import Protocol from './components/Protocol';
 import GetStarted from './components/GetStarted';
@@ -29,6 +30,7 @@ export default function App() {
       <main id="main">
         <Hero />
         <Features />
+        <Walkthrough />
         <Manifesto />
         <Protocol />
         <GetStarted />

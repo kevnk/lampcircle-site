@@ -23,7 +23,7 @@ Netlify reads `netlify.toml`: it runs `npm run build`, publishes `dist/`, sets t
 
 | Path | What it holds |
 | --- | --- |
-| `src/App.jsx` | Page order: navbar, hero, features, manifesto, how it works, get started, footer |
+| `src/App.jsx` | Page order: navbar, hero, features, walkthrough video, manifesto, how it works, get started, footer |
 | `src/components/` | One file per section, plus `ui.jsx` (pill button, GitHub link, sound bars) |
 | `src/site.js` | Download and GitHub links, Unsplash image URLs and alt text, the reduced-motion hook |
 | `src/index.css` | Film-grain overlay, button styles, keyframes, reduced-motion rules |

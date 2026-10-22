@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { ArrowDown, Download } from 'lucide-react';
+import { ArrowDown, Download, CirclePlay } from 'lucide-react';
 import { DOWNLOAD_URL, IMAGES, useReducedMotion } from '../site';
 import { Button, SoundBars } from './ui';
 
@@ -64,6 +64,14 @@ export default function Hero() {
             See how it works
             <ArrowDown size={16} strokeWidth={2.5} aria-hidden="true" />
           </Button>
+          {/* Shown only where it fits beside the buttons. Narrower, it wraps to its own line and pushes the headline up under the nav. */}
+          <a
+            href="#walkthrough"
+            className="lift hidden items-center gap-s3 font-semibold leading-snug text-cream/80 underline-offset-4 hover:text-cream hover:underline lg:inline-flex"
+          >
+            <CirclePlay size={18} strokeWidth={2.5} aria-hidden="true" />
+            Watch the walkthrough · 28 min
+          </a>
         </div>
       </div>
     </section>
