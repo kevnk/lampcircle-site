@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const DOWNLOAD_URL = 'https://github.com/kevnk/lampcircle/releases/latest';
+export const DOWNLOAD_URL = 'https://github.com/kevnk/lampcircle/releases/latest/download/Lampcircle_universal.dmg';
 export const RELEASES_URL = 'https://github.com/kevnk/lampcircle/releases';
 export const REPO_URL = 'https://github.com/kevnk/lampcircle';
 
