@@ -4,6 +4,9 @@ export const DOWNLOAD_URL = 'https://github.com/kevnk/lampcircle/releases/latest
 export const RELEASES_URL = 'https://github.com/kevnk/lampcircle/releases';
 export const REPO_URL = 'https://github.com/kevnk/lampcircle';
 
+// Fathom's script loads async and blockers may stop it, so skip quietly when it isn't there.
+export const trackEvent = name => { window.fathom && window.fathom.trackEvent(name); };
+
 const unsplash = (id, w) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;
 const srcSet = (id, widths) => widths.map(w => `${unsplash(id, w)} ${w}w`).join(', ');
 

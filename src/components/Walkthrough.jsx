@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ArrowUpRight, Play } from 'lucide-react';
-import { useReducedMotion } from '../site';
+import { trackEvent, useReducedMotion } from '../site';
 
 const LOOM_ID = '9d9ed6224d9549be8fcb4d0cee6c2b87';
 const SHARE_URL = `https://www.loom.com/share/${LOOM_ID}`;
@@ -13,6 +13,9 @@ const POSTER = `https://cdn.loom.com/sessions/thumbnails/${LOOM_ID}-5139b4f758a3
 
 // Keyboard users land in the player once it replaces the button. Defined once, so React calls it only on mount.
 const focusOnMount = el => el?.focus();
+
+// Module-level, so a remount can't count the same visit's play twice.
+let walkthroughTracked = false;
 
 export default function Walkthrough() {
   const root = useRef(null);
@@ -65,7 +68,13 @@ export default function Walkthrough() {
             ) : (
               <button
                 type="button"
-                onClick={() => setPlaying(true)}
+                onClick={() => {
+                  if (!walkthroughTracked) {
+                    walkthroughTracked = true;
+                    trackEvent('walkthrough_video_play');
+                  }
+                  setPlaying(true);
+                }}
                 aria-label="Play the Lamp Circle walkthrough, 28 minutes"
                 className="group absolute inset-0 overflow-hidden rounded-[inherit]"
               >

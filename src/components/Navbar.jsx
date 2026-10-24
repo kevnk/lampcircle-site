@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Download } from 'lucide-react';
-import { DOWNLOAD_URL } from '../site';
+import { DOWNLOAD_URL, trackEvent } from '../site';
 import { Button, GithubLink } from './ui';
 
 const LINKS = [
@@ -52,7 +52,7 @@ export default function Navbar() {
 
         <div className="flex shrink-0 items-center sm:gap-s2">
           <GithubLink className="h-9 w-9 opacity-80 hover:opacity-100 sm:h-10 sm:w-10" />
-          <Button href={DOWNLOAD_URL} size="sm">
+          <Button href={DOWNLOAD_URL} size="sm" onClick={() => trackEvent('download_dmg_click')}>
             <Download size={15} strokeWidth={2.5} aria-hidden="true" />
             <span>
               Download<span className="sr-only sm:not-sr-only"> for Mac</span>

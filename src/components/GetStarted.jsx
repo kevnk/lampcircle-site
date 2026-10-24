@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { Check, Download, Repeat } from 'lucide-react';
-import { DOWNLOAD_URL, RELEASES_URL, useReducedMotion } from '../site';
+import { DOWNLOAD_URL, RELEASES_URL, trackEvent, useReducedMotion } from '../site';
 import { Button, SoundBars } from './ui';
 
 const POINTS = [
@@ -133,7 +133,7 @@ export default function GetStarted() {
               ))}
             </ul>
             <div className="gs-in mt-s7 flex flex-wrap items-center gap-x-s6 gap-y-s5">
-              <Button href={DOWNLOAD_URL} size="lg">
+              <Button href={DOWNLOAD_URL} size="lg" onClick={() => trackEvent('download_dmg_click')}>
                 <Download size={20} strokeWidth={2.5} aria-hidden="true" />
                 Download for Mac
               </Button>

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ArrowDown, Download, CirclePlay } from 'lucide-react';
-import { DOWNLOAD_URL, IMAGES, useReducedMotion } from '../site';
+import { DOWNLOAD_URL, IMAGES, trackEvent, useReducedMotion } from '../site';
 import { Button, SoundBars } from './ui';
 
 export default function Hero() {
@@ -56,7 +56,7 @@ export default function Hero() {
         </p>
 
         <div className="hero-in mt-s7 flex flex-wrap items-center gap-s5">
-          <Button href={DOWNLOAD_URL}>
+          <Button href={DOWNLOAD_URL} onClick={() => trackEvent('download_dmg_click')}>
             <Download size={18} strokeWidth={2.5} aria-hidden="true" />
             Download for Mac
           </Button>

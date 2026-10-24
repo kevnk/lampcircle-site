@@ -1,4 +1,4 @@
-import { DOWNLOAD_URL, RELEASES_URL, REPO_URL } from '../site';
+import { DOWNLOAD_URL, RELEASES_URL, REPO_URL, trackEvent } from '../site';
 import { GithubLink } from './ui';
 
 const COLUMNS = [
@@ -14,7 +14,7 @@ const COLUMNS = [
   {
     title: 'Get it',
     links: [
-      { href: DOWNLOAD_URL, label: 'Download for Mac' },
+      { href: DOWNLOAD_URL, label: 'Download for Mac', event: 'download_dmg_click' },
       { href: RELEASES_URL, label: 'All releases' },
       { href: REPO_URL, label: 'Lamp Circle on GitHub' },
     ],
@@ -53,7 +53,11 @@ export default function Footer() {
               <ul className="mt-s6 space-y-s5 font-medium leading-snug">
                 {column.links.map(link => (
                   <li key={link.label}>
-                    <a href={link.href} className="lift inline-block text-cream/85 hover:text-amber-text">
+                    <a
+                      href={link.href}
+                      onClick={link.event && (() => trackEvent(link.event))}
+                      className="lift inline-block text-cream/85 hover:text-amber-text"
+                    >
                       {link.label}
                     </a>
                   </li>
