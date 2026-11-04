@@ -43,9 +43,9 @@ export default function Manifesto() {
         <p className="line-quiet mt-s7 max-w-3xl font-medium leading-read text-mist md:text-t1">
           <Words text="Most worship tech focuses on the stage: click tracks, in-ear mixes, a band that rehearsed." />
         </p>
-        <p className="line-loud mt-s7 text-balance font-drama text-[clamp(theme(fontSize.t2),11vw,theme(fontSize.t4))] italic leading-tight">
+        <h2 className="line-loud mt-s7 text-balance font-drama text-[clamp(theme(fontSize.t2),11vw,theme(fontSize.t4))] italic leading-tight">
           <Words text="We focus on the" /> <Words text="living room." className="text-amber" />
-        </p>
+        </h2>
         <p className="line-note mt-s7 max-w-xl text-mist md:mt-s8">
           No instruments in the room? You can do more than put on a YouTube video. Lamp Circle lets you hold a
           chorus while the room keeps singing, repeat a verse, or move to the bridge when the moment calls for it,

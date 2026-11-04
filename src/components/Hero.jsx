@@ -43,7 +43,7 @@ export default function Hero() {
         <h1 className="mt-s6">
           <span className="hero-in block text-t1 font-extrabold leading-tight tracking-tight sm:text-t2">
             Living-room worship meets
-          </span>
+          </span>{' '}
           <span className="hero-in -ml-s2 block font-drama text-[clamp(theme(fontSize.t3),16vw,theme(fontSize.t5))] italic leading-tight text-cream md:-ml-s4">
             the downbeat.
           </span>

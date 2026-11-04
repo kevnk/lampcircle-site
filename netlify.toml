@@ -11,6 +11,11 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
 
 [[headers]]
+  for = "/site.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+
+[[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"

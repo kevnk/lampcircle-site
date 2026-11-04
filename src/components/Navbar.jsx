@@ -28,7 +28,7 @@ export default function Navbar() {
         aria-label="Main"
         className={`flex w-full max-w-4xl items-center justify-between gap-s4 rounded-full border py-s4 pl-s5 pr-s4 leading-snug sm:gap-s5 transition-[background-color,color,border-color,box-shadow,backdrop-filter] duration-500 ${
           scrolled
-            ? 'border-navy/10 bg-paper/60 text-navy shadow-card backdrop-blur-xl'
+            ? 'border-navy/10 bg-paper/80 text-navy shadow-card backdrop-blur-xl'
             : 'on-dark border-cream/10 bg-midnight/70 text-cream shadow-card backdrop-blur-xl'
         }`}
       >

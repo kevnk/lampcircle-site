@@ -25,7 +25,7 @@ export function GithubLink({ className = '' }) {
       href={REPO_URL}
       target="_blank"
       rel="noopener"
-      aria-label="Lamp Circle on GitHub"
+      aria-label="Lamp Circle on GitHub (opens in a new tab)"
       className={`lift inline-flex shrink-0 items-center justify-center rounded-full ${className}`}
     >
       <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor" aria-hidden="true">
