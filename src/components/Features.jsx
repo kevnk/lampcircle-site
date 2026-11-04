@@ -219,7 +219,7 @@ function PadScheduler() {
         {PAD_MODES.map(name => (
           <span
             key={name}
-            className={`flex-1 rounded-full py-s3 text-center ${name === 'Advanced' ? 'bg-amber/15 text-amber-deep ring-1 ring-amber' : 'text-smoke'}`}
+            className={`flex-1 rounded-full py-s3 text-center ${name === 'Advanced' ? 'bg-amber/10 text-amber-deep ring-1 ring-amber' : 'text-smoke'}`}
           >
             {name}
           </span>

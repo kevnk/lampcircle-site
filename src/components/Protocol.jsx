@@ -331,7 +331,7 @@ export default function Protocol() {
             <div className="card-content mx-auto grid w-full max-w-6xl items-center gap-s7 md:grid-cols-2 md:gap-s8">
               <div className="order-2 md:order-1">
                 <p className={`font-semibold leading-snug ${accent}`}>
-                  {n} <span className="opacity-60">/ 03</span>
+                  {n} <span className={muted}>/ 03</span>
                 </p>
                 <h3 className="mt-s4 text-t1 font-extrabold leading-tight tracking-tight sm:text-t2 md:text-t3">{title}</h3>
                 <p className={`mt-s5 max-w-md md:mt-s6 ${muted}`}>{body}</p>

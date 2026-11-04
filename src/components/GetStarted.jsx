@@ -70,7 +70,7 @@ function SongMap() {
                     : 'bg-panel text-cream/80 ring-1 ring-line'
               }`}
             >
-              <span className={`block ${i === playing ? 'text-navy/70' : 'text-mist'}`}>{i + 1}</span>
+              <span className={`block ${i === playing ? 'text-navy/80' : 'text-mist'}`}>{i + 1}</span>
               {name}
             </span>
           ))}

@@ -49,20 +49,46 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Lamp Circle",
-        "description": "Live song maps for home-church and living-room worship.",
-        "url": "https://lampcircle.truefrontier.app/",
-        "downloadUrl": "https://github.com/kevnk/lampcircle/releases/latest",
-        "operatingSystem": "macOS 12 or later",
-        "applicationCategory": "MultimediaApplication",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "Lamp Circle",
+            "url": "https://lampcircle.truefrontier.app/"
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "Lamp Circle",
+            "description": "Live song maps for home-church and living-room worship.",
+            "url": "https://lampcircle.truefrontier.app/",
+            "downloadUrl": "https://github.com/kevnk/lampcircle/releases/latest",
+            "operatingSystem": "macOS 12 or later",
+            "applicationCategory": "MultimediaApplication",
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+          }
+        ]
       }
     </script>
     <script src="https://cdn.usefathom.com/script.js" data-site="FCQXWWNS" data-spa="auto" data-included-domains="lampcircle.truefrontier.app" defer></script>
   </head>
   <body>
     <div id="root"></div>
+    <!-- The page is built by JavaScript, so without it the body is empty. This summary is for visitors and crawlers
+         that don't run it. The words and links match the hero (src/components/Hero.jsx) and src/site.js. -->
+    <noscript>
+      <div class="mx-auto max-w-xl px-s6 py-s9">
+        <h1 class="text-t2 font-extrabold leading-tight">Living-room worship meets the downbeat.</h1>
+        <p class="mt-s6">
+          Lamp Circle is a free Mac app for leading worship in a small room. Tap the beat while a song plays and mark
+          its sections. Every section then lands on its bar&rsquo;s 1, and a live pad carries you from one song to the
+          next.
+        </p>
+        <p class="mt-s6">
+          <a class="font-bold underline" href="https://github.com/kevnk/lampcircle/releases/latest/download/Lampcircle_universal.dmg">Download for Mac</a>
+          &middot; free, for macOS 12 or later &middot;
+          <a class="underline" href="https://github.com/kevnk/lampcircle/releases">All releases on GitHub</a>
+        </p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
